@@ -1,2 +1,2 @@
-# Senna-Legado
-Site em homenagem a Ayrton Senna. Desenvolvido para fins educacionais.
+# Senna-Legacy 
+A website in tribute to Ayrton Senna. Developed for educational purposes.
