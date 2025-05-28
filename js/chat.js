@@ -1,180 +1,204 @@
-// Script para o chat com IA
+// Script para o chat com IA aprimorado
 document.addEventListener('DOMContentLoaded', function() {
     const chatMessages = document.getElementById('chat-messages');
     const userInput = document.getElementById('user-input');
     const sendBtn = document.getElementById('send-btn');
-    
+
     // Base de conhecimento sobre Ayrton Senna
     const sennaKnowledge = {
-        // Informações biográficas
         "nascimento": "Ayrton Senna nasceu em 21 de março de 1960, em São Paulo, Brasil.",
         "morte": "Ayrton Senna faleceu em 1º de maio de 1994, após um acidente durante o Grande Prêmio de San Marino, em Imola, Itália.",
         "idade": "Ayrton Senna faleceu aos 34 anos de idade.",
         "nome completo": "O nome completo dele era Ayrton Senna da Silva.",
-        "família": "Ayrton Senna era filho de Milton da Silva e Neide Senna da Silva. Ele tinha uma irmã mais velha, Viviane, e um irmão mais novo, Leonardo.",
-        
-        // Carreira
-        "início": "Senna começou no kart aos 13 anos e sua carreira internacional começou em 1981, quando se mudou para a Inglaterra para competir na Fórmula Ford 1600.",
-        "f1": "Senna estreou na Fórmula 1 em 1984 pela equipe Toleman. Depois correu pela Lotus (1985-1987), McLaren (1988-1993) e Williams (1994).",
-        "títulos": "Ayrton Senna conquistou três títulos mundiais de Fórmula 1: 1988, 1990 e 1991, todos pela McLaren.",
-        "vitórias": "Senna conquistou 41 vitórias em Grandes Prêmios de Fórmula 1.",
-        "poles": "Senna conquistou 65 poles positions, sendo considerado o 'Rei da Classificação'.",
-        "pódios": "Senna subiu ao pódio 80 vezes em sua carreira na Fórmula 1.",
-        "mônaco": "Senna venceu seis vezes o GP de Mônaco, um recorde que permanece até hoje, sendo conhecido como 'Rei de Mônaco'.",
-        
-        // Curiosidades
-        "capacete": "O capacete de Senna tinha as cores da bandeira brasileira: amarelo, verde e azul. O design se tornou icônico no mundo do automobilismo.",
-        "rival": "Alain Prost foi o maior rival de Senna na Fórmula 1. A rivalidade entre os dois é considerada uma das maiores da história do esporte.",
-        "chuva": "Senna era conhecido como 'Rei da Chuva' por suas habilidades excepcionais em condições de pista molhada.",
-        "estoril": "Sua primeira vitória na F1 foi no GP de Portugal em Estoril, em 1985, sob forte chuva.",
-        "japão": "Os confrontos mais famosos entre Senna e Prost ocorreram no Japão, em Suzuka, nos anos de 1989 e 1990.",
-        "religião": "Senna era um homem muito religioso e frequentemente falava sobre sua fé. Ele costumava ler a Bíblia regularmente.",
-        "filantropia": "Mesmo antes de sua morte, Senna já realizava trabalhos filantrópicos, muitas vezes de forma anônima.",
-        
-        // Instituto Senna
-        "instituto": "O Instituto Ayrton Senna foi fundado em 1994 por desejo do próprio piloto. É presidido por sua irmã, Viviane Senna, e já beneficiou milhões de crianças e jovens brasileiros através da educação.",
-        
-        // Frases famosas
-        "frases": "Algumas frases famosas de Senna incluem: 'Se você quer ser bem-sucedido, precisa ter dedicação total, buscar seu último limite e dar o melhor de si.', 'Não tenho ídolos. Admiro o trabalho, a dedicação e a competência.', 'Na adversidade, uns desistem, enquanto outros batem recordes.'",
-        
-        // Legado
-        "legado": "O legado de Senna vai muito além das pistas. Ele se tornou um símbolo de excelência, determinação e patriotismo para os brasileiros. Após sua morte, a segurança na F1 melhorou significativamente."
+        "família": "Ele era filho de Milton da Silva e Neide Senna da Silva, com dois irmãos: Viviane e Leonardo.",
+        "início": "Senna começou no kart aos 13 anos. Sua carreira internacional iniciou em 1981 na Fórmula Ford 1600.",
+        "f1": "Senna estreou na Fórmula 1 em 1984 pela Toleman. Correu pela Lotus, McLaren e Williams.",
+        "títulos": "Ayrton Senna foi tricampeão mundial de Fórmula 1: 1988, 1990 e 1991, pela McLaren.",
+        "vitórias": "Ele conquistou 41 vitórias em Grandes Prêmios.",
+        "poles": "Senna fez 65 pole positions na carreira, um recorde na sua época.",
+        "pódios": "Ayrton subiu ao pódio 80 vezes na Fórmula 1.",
+        "mônaco": "Senna venceu o GP de Mônaco 6 vezes, um recorde até hoje.",
+        "capacete": "Seu capacete tinha as cores da bandeira brasileira: amarelo, verde e azul.",
+        "rival": "Alain Prost foi seu maior rival na Fórmula 1.",
+        "chuva": "Senna era chamado de 'Rei da Chuva' por seu desempenho incrível em pistas molhadas.",
+        "estoril": "Sua primeira vitória foi no GP de Portugal em Estoril, 1985, sob forte chuva.",
+        "japão": "Senna e Prost tiveram seus confrontos mais marcantes no GP do Japão, em Suzuka, nos anos 1989 e 1990.",
+        "religião": "Senna era muito religioso e lia a Bíblia regularmente.",
+        "filantropia": "Ele fazia filantropia ainda em vida, muitas vezes anonimamente.",
+        "instituto": "O Instituto Ayrton Senna foi fundado em 1994 por sua irmã Viviane, focando em educação para crianças e jovens no Brasil.",
+        "frases": "Frases famosas: 'Na adversidade, uns desistem, enquanto outros batem recordes.' e 'Se você quer ser bem-sucedido, precisa ter dedicação total, buscar seu último limite e dar o melhor de si.'",
+        "legado": "Senna deixou um legado de excelência, inspiração e melhorias na segurança da Fórmula 1."
     };
-    
-    // Respostas padrão para perguntas não reconhecidas
+
+    // Respostas padrão
     const defaultResponses = [
-        "Desculpe, não tenho essa informação específica sobre Ayrton Senna. Você pode perguntar sobre sua carreira, conquistas ou vida pessoal.",
-        "Essa é uma ótima pergunta, mas não tenho detalhes sobre isso. Posso falar sobre as vitórias, poles, ou momentos marcantes da carreira de Senna.",
-        "Não tenho essa informação no momento. Que tal perguntar sobre os títulos mundiais, recordes ou curiosidades sobre Ayrton Senna?",
-        "Não consigo responder a isso com precisão. Você gostaria de saber sobre o Instituto Ayrton Senna ou sobre sua carreira na Fórmula 1?"
+        "Desculpe, não tenho essa informação. Pergunte sobre sua carreira, títulos ou curiosidades.",
+        "Ótima pergunta! Posso falar sobre títulos, vitórias ou sua vida. Pergunte!",
+        "Não tenho essa resposta, mas posso contar sobre sua carreira ou o Instituto Ayrton Senna.",
+        "Hmm... não sei disso. Que tal saber sobre seu capacete, rivalidades ou vitórias?"
     ];
-    
-    // Mensagens de boas-vindas
+
+    // Saudações possíveis
     const greetings = [
-        "Olá! Como posso ajudar com informações sobre Ayrton Senna?",
-        "Oi! Estou aqui para falar sobre o legado de Ayrton Senna. O que gostaria de saber?",
-        "Olá! Pergunte-me sobre a vida e carreira do tricampeão Ayrton Senna!",
-        "Bem-vindo! Estou pronto para compartilhar informações sobre o ídolo Ayrton Senna."
+        "Olá! O que deseja saber sobre Ayrton Senna?",
+        "Oi! Pergunte sobre a vida e carreira de Ayrton Senna.",
+        "Seja bem-vindo! Fale comigo sobre Ayrton Senna.",
+        "Salve! Quer saber mais sobre o nosso campeão Ayrton Senna?"
     ];
-    
-    // Função para adicionar mensagem ao chat
+
+    // Função para normalizar texto, removendo repetições exageradas e acentos
+    function normalizeText(text) {
+        return text
+            .toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // remove acentos
+            .replace(/(.)\1{2,}/g, '$1'); // reduz letras repetidas (boooom -> bom)
+    }
+
+    // Adiciona mensagens no chat
     function addMessage(text, isUser) {
         const messageDiv = document.createElement('div');
-        messageDiv.classList.add('message');
-        messageDiv.classList.add(isUser ? 'user' : 'bot');
+        messageDiv.classList.add('message', isUser ? 'user' : 'bot');
         messageDiv.textContent = text;
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-    
-    // Função para processar a entrada do usuário e gerar resposta
+
+    // Processa a entrada do usuário
     function processUserInput() {
         const userText = userInput.value.trim();
         if (userText === '') return;
-        
-        // Adicionar mensagem do usuário ao chat
+
         addMessage(userText, true);
-        
-        // Limpar input
         userInput.value = '';
-        
-        // Simular processamento (opcional)
+
         setTimeout(() => {
-            // Gerar resposta
             const response = generateResponse(userText);
             addMessage(response, false);
         }, 500);
     }
-    
-    // Função para gerar resposta com base na entrada do usuário
+
+    // Gera resposta baseada na entrada
     function generateResponse(input) {
-        // Converter para minúsculas para facilitar a comparação
-        const lowerInput = input.toLowerCase();
-        
-        // Verificar se é uma saudação
-        if (lowerInput.match(/^(oi|olá|ola|hey|e aí|e ai|hi|hello)/i)) {
+        const lowerInput = normalizeText(input);
+
+        // Verificar saudações
+        if (lowerInput.match(/^(oi|ola|olá|e ai|eaee|oie|salve|bom dia|boa tarde|boa noite|hey|hi|hello)/i)) {
             return greetings[Math.floor(Math.random() * greetings.length)];
         }
-        
-        // Verificar se é um agradecimento
-        if (lowerInput.match(/(obrigado|obrigada|valeu|thanks)/i)) {
-            return "De nada! Estou aqui para ajudar com informações sobre Ayrton Senna. Tem mais alguma pergunta?";
+
+        // Verificar agradecimento
+        if (lowerInput.match(/(obrigado|obrigada|vlw|valeu|thanks|agradeco)/i)) {
+            return "De nada! Pergunte-me mais sobre Ayrton Senna se desejar!";
         }
-        
-        // Verificar se é uma despedida
-        if (lowerInput.match(/(tchau|adeus|até mais|ate mais|bye|goodbye)/i)) {
-            return "Até mais! Se tiver mais perguntas sobre Ayrton Senna, estarei aqui!";
+
+        // Verificar despedida
+        if (lowerInput.match(/(tchau|adeus|ate mais|flw|fui|bye|goodbye)/i)) {
+            return "Até mais! Sempre que quiser, estarei aqui para falar sobre Ayrton Senna.";
         }
-        
-        // Verificar perguntas específicas sobre nascimento
-        if ((lowerInput.includes("quando") || lowerInput.includes("que dia") || lowerInput.includes("data")) && 
-            (lowerInput.includes("nasc") || lowerInput.includes("nasceu"))) {
+
+        // Perguntas específicas
+        if (lowerInput.includes("quando") && (lowerInput.includes("nasceu") || lowerInput.includes("nascimento"))) {
             return sennaKnowledge["nascimento"];
         }
-        
-        // Verificar perguntas sobre morte
-        if ((lowerInput.includes("quando") || lowerInput.includes("que dia") || lowerInput.includes("data")) && 
-            (lowerInput.includes("morreu") || lowerInput.includes("faleceu") || lowerInput.includes("morte"))) {
+
+        if (lowerInput.includes("quando") && (lowerInput.includes("morreu") || lowerInput.includes("faleceu") || lowerInput.includes("morte"))) {
             return sennaKnowledge["morte"];
         }
-        
-        // Verificar perguntas sobre títulos
-        if (lowerInput.includes("quantos") && 
-            (lowerInput.includes("título") || lowerInput.includes("titulos") || lowerInput.includes("campeão") || lowerInput.includes("campeao"))) {
+
+        if (lowerInput.includes("idade")) {
+            return sennaKnowledge["idade"];
+        }
+
+        if (lowerInput.includes("nome completo")) {
+            return sennaKnowledge["nome completo"];
+        }
+
+        if (lowerInput.includes("familia") || lowerInput.includes("pais") || lowerInput.includes("irma")) {
+            return sennaKnowledge["família"];
+        }
+
+        if (lowerInput.includes("inicio") || lowerInput.includes("começou") || lowerInput.includes("comeco")) {
+            return sennaKnowledge["início"];
+        }
+
+        if (lowerInput.includes("f1") || lowerInput.includes("formula 1") || lowerInput.includes("carreira")) {
+            return sennaKnowledge["f1"];
+        }
+
+        if (lowerInput.includes("titulo") || lowerInput.includes("campeao") || lowerInput.includes("campeão")) {
             return sennaKnowledge["títulos"];
         }
-        
-        // Verificar perguntas sobre vitórias
-        if (lowerInput.includes("quantas") && 
-            (lowerInput.includes("vitória") || lowerInput.includes("vitorias") || lowerInput.includes("ganhou") || lowerInput.includes("venceu"))) {
+
+        if (lowerInput.includes("vitoria") || lowerInput.includes("venceu") || lowerInput.includes("ganhou")) {
             return sennaKnowledge["vitórias"];
         }
-        
-        // Verificar perguntas sobre instituto
-        if (lowerInput.includes("instituto")) {
-            return sennaKnowledge["instituto"];
+
+        if (lowerInput.includes("pole")) {
+            return sennaKnowledge["poles"];
         }
-        
-        // Verificar perguntas sobre frases
-        if (lowerInput.includes("frase") || lowerInput.includes("citação") || lowerInput.includes("disse")) {
-            return sennaKnowledge["frases"];
+
+        if (lowerInput.includes("podio") || lowerInput.includes("pódio")) {
+            return sennaKnowledge["pódios"];
         }
-        
-        // Verificar perguntas sobre rival
-        if (lowerInput.includes("rival") || lowerInput.includes("prost")) {
-            return sennaKnowledge["rival"];
+
+        if (lowerInput.includes("monaco")) {
+            return sennaKnowledge["mônaco"];
         }
-        
-        // Verificar perguntas sobre chuva
-        if (lowerInput.includes("chuva") || lowerInput.includes("molhada")) {
-            return sennaKnowledge["chuva"];
-        }
-        
-        // Verificar perguntas sobre capacete
+
         if (lowerInput.includes("capacete") || lowerInput.includes("cores")) {
             return sennaKnowledge["capacete"];
         }
-        
-        // Verificar perguntas sobre legado
-        if (lowerInput.includes("legado") || lowerInput.includes("importância") || lowerInput.includes("importancia")) {
+
+        if (lowerInput.includes("rival") || lowerInput.includes("prost")) {
+            return sennaKnowledge["rival"];
+        }
+
+        if (lowerInput.includes("chuva") || lowerInput.includes("molhada")) {
+            return sennaKnowledge["chuva"];
+        }
+
+        if (lowerInput.includes("estoril")) {
+            return sennaKnowledge["estoril"];
+        }
+
+        if (lowerInput.includes("japao") || lowerInput.includes("suzuka")) {
+            return sennaKnowledge["japão"];
+        }
+
+        if (lowerInput.includes("religiao") || lowerInput.includes("fe") || lowerInput.includes("biblia")) {
+            return sennaKnowledge["religião"];
+        }
+
+        if (lowerInput.includes("filantropia") || lowerInput.includes("doacoes") || lowerInput.includes("ajuda")) {
+            return sennaKnowledge["filantropia"];
+        }
+
+        if (lowerInput.includes("instituto")) {
+            return sennaKnowledge["instituto"];
+        }
+
+        if (lowerInput.includes("frase") || lowerInput.includes("citacao") || lowerInput.includes("disse")) {
+            return sennaKnowledge["frases"];
+        }
+
+        if (lowerInput.includes("legado") || lowerInput.includes("importancia") || lowerInput.includes("impacto")) {
             return sennaKnowledge["legado"];
         }
-        
-        // Procurar palavras-chave na base de conhecimento
+
+        // Busca geral por palavra-chave
         for (const [keyword, response] of Object.entries(sennaKnowledge)) {
             if (lowerInput.includes(keyword)) {
                 return response;
             }
         }
-        
-        // Se não encontrar correspondência, retornar uma resposta padrão
+
+        // Resposta padrão se não encontrar nada
         return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
     }
-    
+
     // Event listeners
     if (sendBtn && userInput) {
         sendBtn.addEventListener('click', processUserInput);
-        
         userInput.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 processUserInput();
